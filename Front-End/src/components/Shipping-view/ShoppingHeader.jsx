@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+
+import { addtocart } from "@/Redux/AddtoCart";
+import Cartview from "./Cartview";
 
 const menuItem = [
   {
@@ -34,6 +39,28 @@ const menuItem = [
 ];
 
 function Navitem() {
+  const { user } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+  async function fetchCart(id) {
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/api/cart/fetchcart/${id}`
+      );
+      if (res.data.success) {
+        dispatch(addtocart(res.data?.data.items));
+      } else {
+        dispatch(addtocart(null));
+      }
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    fetchCart(user.id);
+  }, []);
   return (
     <div className=" flex text-xl gap-4 flex-col justify-start lg:flex-row ">
       {menuItem.map((item, i) => (
@@ -48,6 +75,7 @@ function Navitem() {
 
 function ShoppingHeader() {
   const [open, setOpen] = useState(false);
+  const [opencart, setOpencart] = useState(false);
   return (
     <div className=" flex justify-between items-center w-full  px-8 py-4 ">
       <div className="flex item-center justify-center gap-4">
@@ -72,7 +100,7 @@ function ShoppingHeader() {
       <div className="hidden lg:flex relative">
         {" "}
         <div className="flex justify-center items-center gap-4">
-          <ShoppingCart />
+          <ShoppingCart onClick={() => setOpencart(true)} />
           <span
             onClick={() => setOpen(!open)}
             className="bg-black cursor-pointer  p-2 rounded-full text-white">
@@ -86,6 +114,7 @@ function ShoppingHeader() {
             </div>
           ) : null}
         </div>
+        <Cartview open={opencart} setOpen={setOpencart} />
       </div>
     </div>
   );

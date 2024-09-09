@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const ConnectDb = require("./confiq/ConnectDb");
 const authController = require("./controllerRoute/AuthController");
 const productController = require("./controllerRoute/productController");
+const cartController = require("./controllerRoute/cartController");
 const app = express();
 const PORT = 3000;
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use(
 
 app.use("/api/auth", authController);
 app.use("/api/products", productController);
+app.use("/api/cart", cartController);
 
 //error  middleware
 app.use((error, req, res, next) => {

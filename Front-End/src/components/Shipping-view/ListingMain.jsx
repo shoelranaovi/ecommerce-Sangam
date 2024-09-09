@@ -12,6 +12,8 @@ import { ArrowDownUpIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 
 import Cartproduct from "./productCard";
+import DialogPost from "./DialogPost";
+import { useState } from "react";
 // import Cartproduct from "./productCard";
 
 const sortOptions = [
@@ -22,6 +24,8 @@ const sortOptions = [
 ];
 function ListingMain({ sort, setSort }) {
   console.log(sort);
+  const [open, setOpen] = useState(false);
+  const [productDetails, setProductDetails] = useState(null);
 
   const { post } = useSelector((state) => state.post);
 
@@ -60,11 +64,17 @@ function ListingMain({ sort, setSort }) {
       </div>
       <div className=" bg-slate-500 gap-4  mt-5 justify-center flex w-full flex-wrap">
         {post?.map((item, i) => (
-          <div key={i}>
+          <div
+            onClick={() => {
+              setOpen(true);
+              setProductDetails(item);
+            }}
+            key={i}>
             <Cartproduct item={item} />{" "}
           </div>
         ))}
       </div>
+      <DialogPost open={open} setOpen={setOpen} item={productDetails} />
     </div>
   );
 }

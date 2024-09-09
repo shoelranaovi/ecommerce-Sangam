@@ -3,10 +3,12 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import AuthSlice from "./AuthSlice";
 import postSlice from "./postSlice";
+import cartSlice from "./AddtoCart";
 
 const rootReducer = combineReducers({
   auth: AuthSlice,
   post: postSlice,
+  cart: cartSlice,
 });
 
 const persistConfig = {
