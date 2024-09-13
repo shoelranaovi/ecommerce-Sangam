@@ -1,5 +1,5 @@
 import { AlignRight, Home, ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
@@ -13,16 +13,16 @@ import Cartview from "./Cartview";
 const menuItem = [
   {
     id: "home",
-    path: "/shopping/listing",
+    path: "/shopping",
     text: "Home",
   },
   {
-    id: "men",
+    id: "man",
     path: "/shopping/listing",
     text: "Men",
   },
   {
-    id: "women",
+    id: "woman",
     path: "/shopping/listing",
     text: "Women",
   },
@@ -32,7 +32,7 @@ const menuItem = [
     text: "FootWear",
   },
   {
-    id: "accessories",
+    id: "accessrioes",
     path: "/shopping/listing",
     text: "Accessories",
   },
@@ -41,6 +41,19 @@ const menuItem = [
 function Navitem() {
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+
+  async function handlecategory(item) {
+    sessionStorage.removeItem("filters");
+    const currentItem =
+      item.id !== "home"
+        ? {
+            category: [item.id],
+          }
+        : null;
+    sessionStorage.setItem("filters", JSON.stringify(currentItem));
+    navigate(item.path);
+  }
 
   const dispatch = useDispatch();
   async function fetchCart(id) {
@@ -64,7 +77,7 @@ function Navitem() {
   return (
     <div className=" flex text-xl gap-4 flex-col justify-start lg:flex-row ">
       {menuItem.map((item, i) => (
-        <Link key={i} to={item.path}>
+        <Link onClick={() => handlecategory(item)} key={i} to={item.path}>
           {" "}
           {item.text}{" "}
         </Link>

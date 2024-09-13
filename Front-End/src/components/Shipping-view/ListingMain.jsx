@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import Cartproduct from "./productCard";
 import DialogPost from "./DialogPost";
 import { useState } from "react";
+
 // import Cartproduct from "./productCard";
 
 const sortOptions = [
@@ -23,11 +24,12 @@ const sortOptions = [
   { id: "title-ztoa", label: "Title: Z to A" },
 ];
 function ListingMain({ sort, setSort }) {
-  console.log(sort);
   const [open, setOpen] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
+  console.log(open, setOpen);
 
   const { post } = useSelector((state) => state.post);
+  console.log(post);
 
   function handlesortchange(event) {
     setSort(event);
@@ -66,11 +68,10 @@ function ListingMain({ sort, setSort }) {
         {post?.map((item, i) => (
           <div
             onClick={() => {
-              setOpen(true);
               setProductDetails(item);
             }}
             key={i}>
-            <Cartproduct item={item} />{" "}
+            <Cartproduct item={item} setOpen={setOpen} />{" "}
           </div>
         ))}
       </div>

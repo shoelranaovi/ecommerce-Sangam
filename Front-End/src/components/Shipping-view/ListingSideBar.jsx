@@ -3,6 +3,8 @@
 /* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import { Checkbox } from "../ui/checkbox";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const filterOption = {
   category: [
@@ -24,6 +26,7 @@ const filterOption = {
 
 // eslint-disable-next-line react/prop-types
 function ShoppingSideBar({ filters, setFilters }) {
+  const navigate = useNavigate();
   function handleFilters(getsessionid, getcurrentfilter) {
     let cpyfilter = { ...filters };
     const indexofCurrentsection = Object.keys(cpyfilter).indexOf(getsessionid);

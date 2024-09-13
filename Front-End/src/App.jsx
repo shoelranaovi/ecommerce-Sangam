@@ -17,6 +17,7 @@ import ShoppingCheckout from "./pages/shoping-view/ShoppingCheckout";
 import AuthenticationRote from "./privateRoute";
 import useCheckUser from "./hook/authCheck";
 import Product from "./components/Admin-view/Product";
+import ShippingLayout from "./pages/shoping-view/ShippingLayout";
 const route = createBrowserRouter([
   {
     path: "/",
@@ -88,13 +89,13 @@ const route = createBrowserRouter([
     path: "shopping",
     element: (
       <AuthenticationRote>
-        <ShopingHome />
+        <ShippingLayout />
       </AuthenticationRote>
     ),
     children: [
       {
         path: "",
-        element: <ShippingAccount />,
+        element: <ShopingHome />,
       },
       {
         path: "account",

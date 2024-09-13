@@ -6,17 +6,21 @@ import { setAllPost } from "@/Redux/postSlice";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function ShippingListing() {
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParmas, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  console.log(filters);
+
   const qurey = new URLSearchParams({
     ...filters,
     sortBy: sort,
   });
+
   async function fetchProduct() {
     try {
       const res = await axios.get(
@@ -25,13 +29,10 @@ function ShippingListing() {
           withCredentials: true,
         }
       );
-      console.log(res);
 
       if (res.data.success) {
         dispatch(setAllPost(res.data.data));
       }
-
-      console.log(res.data?.data);
     } catch (error) {
       console.log(error);
       dispatch(setAllPost(null));
@@ -50,13 +51,13 @@ function ShippingListing() {
 
   useEffect(() => {
     fetchProduct();
-  }, [dispatch, filters, sort]);
+  }, [filters, sort]);
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
       const createQuryString = createSearchParamsHelpers(filters);
       setSearchParams(createQuryString);
     }
-  }, [filters]);
+  }, [filters, navigate]);
   return (
     <div className="flex ">
       <ShoppingSideBar filters={filters} setFilters={setFilters} />

@@ -10,6 +10,7 @@ import { toast } from "sonner";
 
 function DialogPost({ open, setOpen, item }) {
   const { user } = useSelector((state) => state.auth);
+  console.log(setOpen);
 
   const dispatch = useDispatch();
 
@@ -29,8 +30,9 @@ function DialogPost({ open, setOpen, item }) {
       );
       if (res.data.success) {
         toast.success(res.data.message);
-        console.log(typeof res.data.data);
-        dispatch(addtocart(res.data.data.items));
+        console.log(res.data.data);
+
+        dispatch(addtocart(res.data.data));
       } else {
         toast.error(res.data.message);
       }

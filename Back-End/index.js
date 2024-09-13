@@ -6,6 +6,8 @@ const ConnectDb = require("./confiq/ConnectDb");
 const authController = require("./controllerRoute/AuthController");
 const productController = require("./controllerRoute/productController");
 const cartController = require("./controllerRoute/cartController");
+const addressController = require("./controllerRoute/addressController");
+
 const app = express();
 const PORT = 3000;
 app.use(express.json());
@@ -20,6 +22,7 @@ app.use(
 app.use("/api/auth", authController);
 app.use("/api/products", productController);
 app.use("/api/cart", cartController);
+app.use("/api/address", addressController);
 
 //error  middleware
 app.use((error, req, res, next) => {

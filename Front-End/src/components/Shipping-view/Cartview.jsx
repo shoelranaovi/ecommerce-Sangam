@@ -10,7 +10,7 @@ function Cartview({ open, setOpen }) {
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent className="flex flex-col gap-4" side="right">
-          {cart.map((item, i) => (
+          {cart?.map((item, i) => (
             <CartitemView key={i} item={item} />
           ))}
         </SheetContent>
