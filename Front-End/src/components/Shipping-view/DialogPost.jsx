@@ -10,7 +10,6 @@ import { toast } from "sonner";
 
 function DialogPost({ open, setOpen, item }) {
   const { user } = useSelector((state) => state.auth);
-  console.log(setOpen);
 
   const dispatch = useDispatch();
 

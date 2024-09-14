@@ -47,6 +47,7 @@ export const deleteAddress = createAsyncThunk(
     const response = await axios.delete(
       `http://localhost:3000/api/address/delete/${userId}/${addressId}`
     );
+    console.log(response.data);
 
     return response.data;
   }
